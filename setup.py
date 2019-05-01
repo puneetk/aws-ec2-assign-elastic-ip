@@ -22,7 +22,7 @@ setup(name='aws-ec2-assign-elastic-ip',
       scripts=['aws-ec2-assign-elastic-ip'],
       include_package_data=True,
       zip_safe=False,
-      install_requires=['boto >= 2.36.0', 'netaddr >= 0.7.12'],
+      install_requires=['boto3>=1.0.0', 'ec2-metadata>=1.8.0', 'netaddr>=0.7.12'],
       classifiers=[
           'Development Status :: 4 - Beta', 'Environment :: Console',
           'License :: OSI Approved :: Apache Software License',
