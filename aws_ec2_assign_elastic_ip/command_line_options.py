@@ -23,39 +23,32 @@ PARSER.add_argument(
     '--version',
     action='count',
     help='Print the aws-ec2-assign-elastic-ip version and exit')
-PARSER.add_argument(
-    '--region',
-    default='us-east-1',
-    help='AWS region. Default: us-east-1')
-PARSER.add_argument(
-    '--access-key',
-    help='AWS access key ID')
-PARSER.add_argument(
-    '--secret-key',
-    help='AWS secret access key ID')
+PARSER.add_argument('--region',
+                    default='us-east-1',
+                    help='AWS region. Default: us-east-1')
+PARSER.add_argument('--access-key', help='AWS access key ID')
+PARSER.add_argument('--secret-key', help='AWS secret access key ID')
 PARSER.add_argument(
     '--dry-run',
     action='store_true',
-    help=(
-        'Turn on dry run mode. No address will be assigned,\n'
-        'we will only print which we whould take'))
+    default=False,
+    help=('Turn on dry run mode. No address will be assigned,\n'
+          'we will only print which we whould take'))
 PARSER.add_argument(
     '--valid-ips',
-    help=(
-        'A comma separated list of valid Elastic IPs.\nYou can use CIDR '
-        'expressions to select ranges.\nValid examples:\n'
-        '- 58.0.0.0/8\n'
-        '- 123.213.0.0/16,58.0.0.0/8,195.234.023.0\n'
-        '- 195.234.234.23,195.234.234.24\n'))
+    help=('A comma separated list of valid Elastic IPs.\nYou can use CIDR '
+          'expressions to select ranges.\nValid examples:\n'
+          '- 58.0.0.0/8\n'
+          '- 123.213.0.0/16,58.0.0.0/8,195.234.023.0\n'
+          '- 195.234.234.23,195.234.234.24\n'))
 PARSER.add_argument(
     '--invalid-ips',
-    help=(
-        'A comma separated list of Elastic IP ranges that should not '
-        'be used for assigning an ip. \n  You can use CIDR '
-        'expressions to select ranges.\nValid examples:\n'
-        '- 58.0.0.0/8\n'
-        '- 123.213.0.0/16,58.0.0.0/8,195.234.023.0\n'
-        '- 195.234.234.23,195.234.234.24\n'))
+    help=('A comma separated list of Elastic IP ranges that should not '
+          'be used for assigning an ip. \n  You can use CIDR '
+          'expressions to select ranges.\nValid examples:\n'
+          '- 58.0.0.0/8\n'
+          '- 123.213.0.0/16,58.0.0.0/8,195.234.023.0\n'
+          '- 195.234.234.23,195.234.234.24\n'))
 ARGS = PARSER.parse_args()
 
 if ARGS.version:
