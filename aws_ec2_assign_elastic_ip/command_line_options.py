@@ -36,6 +36,7 @@ PARSER.add_argument(
 PARSER.add_argument(
     '--dry-run',
     action='store_true',
+    default=False,
     help=(
         'Turn on dry run mode. No address will be assigned,\n'
         'we will only print which we whould take'))
