@@ -15,7 +15,6 @@ import boto3
 
 from aws_ec2_assign_elastic_ip.command_line_options import ARGS as args
 
-
 logging.config.fileConfig('{0}/logging.conf'.format(
     ospath.dirname(ospath.realpath(__file__))))
 
@@ -37,8 +36,7 @@ if args.access_key or args.secret_key:
                               aws_secret_access_key=args.secret_key)
 else:
     # Use environment vars or global boto configuration or instance metadata
-    connection = boto3.client('ec2',
-                              region_name=region)
+    connection = boto3.client('ec2', region_name=region)
 logger.info('Connected to AWS EC2 in {0}'.format(region))
 
 
@@ -50,8 +48,9 @@ def main():
     # Check if the instance already has an Elastic IP
     # If so, exit
     if _has_associated_address(instance_id):
-        logger.warning('{0} is already assigned an Elastic IP. Exiting.'.format(
-            instance_id))
+        logger.warning(
+            '{0} is already assigned an Elastic IP. Exiting.'.format(
+                instance_id))
         sys.exit(0)
 
     # Get an unassigned Elastic IP
@@ -83,17 +82,15 @@ def _assign_address(instance_id, address):
     # Check if this is an VPC or standard allocation
     try:
         if address['Domain'] == 'standard':
-        # EC2 classic association
-            connection.associate_address(        
-                InstanceId=instance_id,
-                PublicIp=address['PublicIp'],
-                AllowReassociation=False)
+            # EC2 classic association
+            connection.associate_address(InstanceId=instance_id,
+                                         PublicIp=address['PublicIp'],
+                                         AllowReassociation=False)
         else:
-        # EC2 VPC association
-            connection.associate_address(
-                InstanceId=instance_id,
-                AllocationId=address['AllocationId'],
-                AllowReassociation=False)
+            # EC2 VPC association
+            connection.associate_address(InstanceId=instance_id,
+                                         AllocationId=address['AllocationId'],
+                                         AllowReassociation=False)
     except Exception as error:
         logger.error('Failed to associate {0} with {1}. Reason: {2}'.format(
             instance_id, address['PublicIp'], error))
@@ -148,9 +145,14 @@ def _has_associated_address(instance_id):
     :param instance_id: Instances ID
     :returns: bool -- True if the instance has an Elastic IP associated
     """
-    if connection.describe_addresses(Filters=[{'Name': 'instance-id', 'Values': [ec2_metadata.instance_id]}])['Addresses']:
+    if connection.describe_addresses(
+            Filters=[{
+                'Name': 'instance-id',
+                'Values': [ec2_metadata.instance_id]
+            }])['Addresses']:
         return True
     return False
+
 
 def _is_ip_in_range(address, ips):
     """ Check if the IP is in a given range.
